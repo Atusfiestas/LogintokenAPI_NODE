@@ -1,6 +1,7 @@
 const express = require('express');
 const conectarDB = require('./config/db');
 const authRoutes = require('./routes/authRoutes');
+const productosroutes =require('./routes/productosroutes'); //importar rutas de productos
 
 // Conectar a la base de datos
 conectarDB();
@@ -13,6 +14,9 @@ app.use(express.json());
 
 // Usar rutas de autenticación
 app.use('/api/auth', authRoutes);
+
+//rutas de productos
+app.use('/api',productosroutes); //usar rutas de productos
 
 // Configurar el puerto en el que escuchará el servidor
 const PORT = 5000;
