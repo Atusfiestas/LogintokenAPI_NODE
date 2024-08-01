@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const ProductoSchema = new mongoose.Schema({
+const ServicioSchema = new mongoose.Schema({
     nombre: {
         type: String,
         required: true
@@ -24,4 +24,4 @@ const ProductoSchema = new mongoose.Schema({
     timestamps: true // Esta línea habilita createdAt y updatedAt
 });
 
-module.exports = mongoose.model('Producto', ProductoSchema);
+module.exports = mongoose.model('Servicio', ServicioSchema);

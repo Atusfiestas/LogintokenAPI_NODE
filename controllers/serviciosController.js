@@ -1,4 +1,4 @@
-const Producto = require('../models/Producto');
+const Servicio = require('../models/Servicio');
 const multer = require('multer');
 const shortid = require('shortid');
 const path = require('path'); // Asegúrate de importar 'path'
@@ -34,86 +34,87 @@ exports.subirArchivo = (req, res, next) => {
     });
 };
 
-exports.nuevoProducto = async (req, res, next) => {
-    const producto = new Producto(req.body);
+exports.nuevoServicio = async (req, res, next) => {
+    const servicio = new Servicio(req.body);
 
     try {
         if (req.file) {
-            producto.imagen = req.file.filename;
+            servicio.imagen = req.file.filename;
         }
-        await producto.save();
-        res.json({ mensaje: 'Se agregó un nuevo producto' });
+        await servicio.save();
+        res.json({ mensaje: 'Se agregó un nuevo servicio' });
     } catch (error) {
         console.log(error);
         next();
     }
 };
 
-exports.mostrarProductos = async (req, res, next) => {
+exports.mostrarServicios = async (req, res, next) => {
     try {
-        const productos = await Producto.find({});
-        res.json(productos);
+        const servicios = await Servicio.find({});
+        res.json(servicios);
     } catch (error) {
         console.log(error);
         next();
     }
 };
 
-exports.mostrarProducto = async (req, res, next) => {
+exports.mostrarServicio = async (req, res, next) => {
     try {
-        const producto = await Producto.findById(req.params.idProducto);
+        const servicio = await Servicio.findById(req.params.idServicio);
 
-        if (!producto) {
-            res.json({ mensaje: 'Ese Producto no existe' });
+        if (!servicio) {
+            res.json({ mensaje: 'Ese servicio no existe' });
             return next();
         }
 
-        res.json(producto);
+        res.json(servicio);
     } catch (error) {
-        console.log('Error al buscar el producto:', error);
+        console.log('Error al buscar el servicio:', error);
         next();
     }
 };
 
 
 
-exports.actualizarProducto = async (req, res, next) => {
+exports.actualizarServicio = async (req, res, next) => {
     try {
-        let nuevoProducto = req.body;
+        let nuevoServicio = req.body;
 
         if (req.file) {
-            nuevoProducto.imagen = req.file.filename;
+            nuevoServicio.imagen = req.file.filename;
         } else {
-            let productoAnterior = await Producto.findById(req.params.idProducto);
-            nuevoProducto.imagen = productoAnterior.imagen;
+            let servicioAnterior = await Servicio.findById(req.params.idServicio
+            );
+            nuevoServicio.imagen = servicioAnterior.imagen;
         }
 
-        let producto = await Producto.findOneAndUpdate({ _id: req.params.idProducto }, nuevoProducto, {
+        let servicio = await Servicio.findOneAndUpdate({ _id: req.params.idServicio }, nuevoServicio, {
             new: true
         });
 
-        res.json(producto);
+        res.json(servicio);
     } catch (error) {
         console.log(error);
         next();
     }
 };
 
-exports.eliminarProducto = async (req, res, next) => {
+exports.eliminarServicio = async (req, res, next) => {
     try {
-        await Producto.findByIdAndDelete({ _id: req.params.idProducto });
-        res.json({ mensaje: 'El Producto se ha eliminado' });
+        await Servicio.findByIdAndDelete({ _id: req.params.idServicio });
+        res.json({ mensaje: 'El Servicio se ha eliminado' });
     } catch (error) {
         console.log(error);
         next();
     }
 };
 
-exports.buscarProducto = async (req, res, next) => {
+exports.buscarServicio = async (req, res, next) => {
     try {
         const { query } = req.params;
-        const producto = await Producto.find({ nombre: new RegExp(query, 'i') });
-        res.json(producto);
+        const servicio = await Servicio.find({ nombre: new RegExp(query, 'i') });
+        res.json(servicio);
     } catch (error) {
         console.log(error);
         next();
