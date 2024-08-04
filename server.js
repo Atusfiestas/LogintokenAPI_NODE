@@ -2,6 +2,7 @@ const express = require('express');
 const conectarDB = require('./config/db');
 const authRoutes = require('./routes/authRoutes');
 const serviciosRoutes = require('./routes/serviciosRoutes');
+const ordenesRoutes = require('./routes/ordenesRoutes');
 
 // Conectar a la base de datos
 conectarDB();
@@ -17,6 +18,9 @@ app.use('/api/auth', authRoutes);
 
 // Rutas de servicios
 app.use('/api', serviciosRoutes); // Usar rutas de productos
+
+// Rutas de ordenes
+app.use('/api', ordenesRoutes); // Usar rutas de pedidos
 
 // Configurar el puerto en el que escuchará el servidor
 const PORT = 5000;
